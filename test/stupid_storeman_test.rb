@@ -1,24 +1,15 @@
-ENV['RACK_ENV'] = 'test'
-
-require 'bundler/setup'
-require 'minitest/autorun'
-require 'fakefs/safe'
-
-require_relative 'app'
+require_relative 'test_helper'
 
 class StupidStoremanTest < MiniTest::Unit::TestCase
-  def stuff_directory
-    Dir.tmpdir
-  end
-
   def setup
     FakeFS.activate!
-    # FileUtils.mkdir_p('/Users/inem/') # for pry
+    FileUtils.mkdir_p("/Users/#{ENV['USER']}") # for pry under fakefs
   end
 
   def teardown
     FakeFS.deactivate!
   end
+
 
   def test_storeman
     data = {name: 'aaa/bbb', tags: 'a, b, c'}
@@ -35,4 +26,10 @@ class StupidStoremanTest < MiniTest::Unit::TestCase
 
     assert_equal read_json, data_json
   end
+
+
+  def stuff_directory
+    Dir.tmpdir
+  end
+
 end
