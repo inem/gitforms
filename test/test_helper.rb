@@ -4,4 +4,4 @@ require 'bundler/setup'
 require 'minitest/autorun'
 require 'fakefs/safe'
 
-require_relative '../app'
+require_relative '../gitforms'
