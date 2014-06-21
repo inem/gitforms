@@ -1,0 +1,12 @@
+---
+- structure:
+  - title: name
+    type: string
+
+  - title: tags
+    type: string
+
+- rules:
+  - name: append line
+    append_file: data/projects.json
+    attribute: projects
