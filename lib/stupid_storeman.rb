@@ -1,3 +1,4 @@
+
 class StupidStoreman
   attr_reader :dir
   def initialize(dir)
@@ -29,3 +30,28 @@ class StupidStoreman
     "#{dir}/projects.json"
   end
 end
+
+# class AbstractUpdate
+#   attr_reader :filepath
+#   def initialize(filepath)
+#     @filepath = filepath
+#   end
+# end
+
+# class MicrorbProjectsListUpdate < AbstractUpdate
+#   attr_reader :filepath
+#   def initialize(filepath)
+#     @filepath = filepath
+#   end
+
+#   def persist!(data)
+
+#   end
+# end
+
+# class MicrorbProjectsDBUpdate AbstractUpdate
+#   def persist!(data)
+
+
+#   end
+# end
