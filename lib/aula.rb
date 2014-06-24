@@ -1,4 +1,6 @@
-class AulaInput < Input
+class Aula
+  include Virtus.model
+
   attribute :title, String
   attribute :year, Integer
   attribute :url, String

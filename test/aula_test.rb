@@ -2,7 +2,7 @@ require_relative 'test_helper'
 
 class AulaTest < MiniTest::Unit::TestCase
   def setup
-    input = AulaInput.new(
+    input = Aula.new(
       title: 'Integrated Tests Are A Scam',
       year: 2014,
       url: "https://vimeo.com/80533536",
