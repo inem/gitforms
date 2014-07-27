@@ -1,16 +1,5 @@
 require_relative 'gitforms'
-
-class Repo
-  attr_reader :user, :name
-
-  def initialize(user, name)
-    @user, @name = user, name
-  end
-
-  def url
-    "https://github.com/#{user}/#{name}.git"
-  end
-end
+require 'git'
 
 def run(cmd)
   puts cmd
@@ -18,31 +7,47 @@ def run(cmd)
 end
 
 input = Aula.new(
-      title: 'Integrated Tests Are A Scam',
-      year: 2014,
-      url: "https://vimeo.com/80533536",
-      imageUrl: "https://i.vimeocdn.com/video/456490527_1280.jpg",
-      description: "Integrated tests are a scam. You’re probably writing 2-5% of the integrated tests you need to test thoroughly. You’re probably duplicating unit tests all over the place. Your integrated tests probably duplicate each other all over the place. When an integrated test fails, who knows what’s broken? Integrated tests probably do you more harm than good. Learn the two-pronged attack that solves the problem: collaboration tests and contract tests.",
-      tags: ['Testing'],
-      speakers: ['J.B. Rainsberger'],
-      location: 'Devtraining'
-    )
+  title: 'Integrated Tests Are A Scam',
+  year: 2014,
+  url: "https://vimeo.com/80533536",
+  imageUrl: "https://i.vimeocdn.com/video/456490527_1280.jpg",
+  description: "Integrated tests are a scam. You’re probably writing 2-5% of the integrated tests you need to test thoroughly. You’re probably duplicating unit tests all over the place. Your integrated tests probably duplicate each other all over the place. When an integrated test fails, who knows what’s broken? Integrated tests probably do you more harm than good. Learn the two-pronged attack that solves the problem: collaboration tests and contract tests.",
+  tags: ['Testing'],
+  speakers: ['J.B. Rainsberger'],
+  location: 'Devtraining'
+)
+
+system_login = 'inem'
+pwd = '###'
+
+repo_url = 'https://github.com/mkaschenko/mkaschenko.github.io.git'
 
 repo = Octokit::Repository.new "mkaschenko/mkaschenko.github.io"
-client = Octokit::Client.new(:login => 'inem', :password => '#####')
+inem_repo = Octokit::Repository.new "#{system_login}/mkaschenko.github.io"
+
+client = Octokit::Client.new(:login => system_login, :password => pwd)
 
 data = input.prepare
 slug = data.fetch(:key)
 client.fork(repo)
 
-run "cd ../repos && github clone inem #{repo.name}"
-# run "cd ../repos/#{repo.name} && git checkout -b #{slug}"
+FileUtils.rm_rf "#{Dir.tmpdir}/#{repo.name}"
 
-storeman = StupidStoreman.new("../repos/#{repo.name}/talks", slug)
-storeman.store! data
+g = Git.clone("#{repo.url}.git", "#{Dir.tmpdir}/#{repo.name}")
+g.chdir do
+  FileUtils.mkdir_p("./talks/")
+  File.open("./talks/#{slug}.json", 'w') do |file|
+    file.write JSON.pretty_generate(data)
+  end
+end
 
-run "cd ../repos/#{repo.name} && git add . && git commit -m 'added talk \'#{data.fetch(:title)}\'' && git push origin master"
-ref = Octokit.ref('inem/mkaschenko.github.io', 'heads/master').object.sha
+msg = "added talk '#{data.fetch(:title)}'"
+g.add(:all=>true)
+g.commit_all(msg)
+
+r = g.add_remote('cloned', "https://github.com/#{system_login}/mkaschenko.github.io.git")
+g.push(r)
+ref = g.log.first.to_s
+
 client.create_pull_request(repo, 'master', ref, "added talk '#{data.fetch(:title)}'", "")
-# `github pull-request inem #{repo.name}`
-# github create pull-request
+client.delete_repo inem_repo

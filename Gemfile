@@ -9,3 +9,4 @@ gem "virtus"
 # gem 'github'
 # gem 'github_cli'
 gem 'octokit'
+gem "git"
