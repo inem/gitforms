@@ -3,10 +3,6 @@ require 'git'
 require 'dotenv'
 Dotenv.load
 
-def run(cmd)
-  puts cmd
-  `#{cmd}`
-end
 
 input = Aula.new(
   title: 'Integrated Tests Are A Scam',

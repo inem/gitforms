@@ -9,3 +9,5 @@ gem "virtus"
 gem 'dotenv'
 gem 'octokit'
 gem "git"
+
+gem "forme"
