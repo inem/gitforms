@@ -1,4 +1,5 @@
 require_relative 'test_helper'
+require 'multi_json'
 
 class StupidStoremanTest < MiniTest::Unit::TestCase
   def setup

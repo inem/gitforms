@@ -11,7 +11,7 @@ class Aula
   attribute :location, String
 
   def prepare
-    hash = wrap_and_keyize(title).merge({
+    @hash ||= wrap_and_keyize(title).merge({
       year: year,
       url: url,
       imageUrl: imageUrl,
@@ -21,17 +21,13 @@ class Aula
       location: wrap_and_keyize(location),
       added: Time.now.utc
     })
-    JSON.pretty_generate(hash)
   end
 end
 
 def wrap_and_keyize(value)
   {
     title: value,
-    key: value
-          .strip
-          .downcase
-          .tr_s('^A-Za-z0-9', '-')
+    key: keyize(value)
   }
 end
 

@@ -1,8 +1,9 @@
 
 class StupidStoreman
   attr_reader :dir
-  def initialize(dir)
+  def initialize(dir, filename)
     @dir = dir
+    @filename = filename
   end
 
   # Public: Duplicate some text an arbitrary number of times.
@@ -21,14 +22,17 @@ class StupidStoreman
     raise RuntimeError.new "File '#{filepath}' already exists!" if File.exist?(filepath)
 
     File.open(filepath, 'w') do |file|
-      file.write MultiJson.dump(data)
+      # file.write MultiJson.dump(data)
+      file.write JSON.pretty_generate(data)
     end
     true
   end
 
   def filepath
-    "#{dir}/projects.json"
+    "#{dir}/#{filename}.json"
   end
+  private
+  attr_reader :dir, :filename
 end
 
 # class AbstractUpdate
