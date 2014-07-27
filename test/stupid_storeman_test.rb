@@ -12,7 +12,7 @@ class StupidStoremanTest < MiniTest::Unit::TestCase
 
 
   def test_storeman
-    data = {name: 'aaa/bbb', tags: 'a, b, c'}
+    data = { name: 'aaa/bbb', tags: 'a, b, c' }
 
     storeman = StupidStoreman.new(stuff_directory)
     storeman.store!(data)
@@ -31,5 +31,4 @@ class StupidStoremanTest < MiniTest::Unit::TestCase
   def stuff_directory
     Dir.tmpdir
   end
-
 end

@@ -17,7 +17,7 @@ class Aula
       imageUrl: imageUrl,
       description: description,
       tags: tags.map{|t| wrap_and_keyize(t)},
-      speakers: speakers.map{|t| wrap_and_keyize(t)},
+      speakers: speakers.map{ |t| wrap_and_keyize(t) },
       location: wrap_and_keyize(location),
       added: Time.now.utc
     })

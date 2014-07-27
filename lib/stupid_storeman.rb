@@ -52,6 +52,5 @@ end
 # class MicrorbProjectsDBUpdate AbstractUpdate
 #   def persist!(data)
 
-
 #   end
 # end
