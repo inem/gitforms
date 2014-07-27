@@ -6,7 +6,6 @@ gem "fakefs", :require => "fakefs/safe"
 gem "multi_json"
 gem "virtus"
 
-# gem 'github'
-# gem 'github_cli'
+gem 'dotenv'
 gem 'octokit'
 gem "git"

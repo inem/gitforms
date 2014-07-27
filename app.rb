@@ -1,5 +1,7 @@
 require_relative 'gitforms'
 require 'git'
+require 'dotenv'
+Dotenv.load
 
 def run(cmd)
   puts cmd
@@ -17,8 +19,8 @@ input = Aula.new(
   location: 'Devtraining'
 )
 
-system_login = 'inem'
-pwd = '###'
+system_login = ENV['GITHUB_LOGIN']
+pwd = ENV['GITHUB_PWD']
 
 repo_url = 'https://github.com/mkaschenko/mkaschenko.github.io.git'
 
@@ -26,6 +28,8 @@ repo = Octokit::Repository.new "mkaschenko/mkaschenko.github.io"
 inem_repo = Octokit::Repository.new "#{system_login}/mkaschenko.github.io"
 
 client = Octokit::Client.new(:login => system_login, :password => pwd)
+# client = Octokit::Client.new(:access_token => ENV['GITHUB_ACCESS_TOKEN'])
+# client.delete_repo inem_repo
 
 data = input.prepare
 slug = data.fetch(:key)
