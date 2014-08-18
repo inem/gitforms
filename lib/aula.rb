@@ -10,7 +10,7 @@ class Aula
   attribute :speakers, Array[String]
   attribute :location, String
 
-  def prepare
+  def prepared_data
     @hash ||= wrap_and_keyize(title).merge({
       year: year,
       url: url,
@@ -21,6 +21,22 @@ class Aula
       location: wrap_and_keyize(location),
       added: Time.now.utc
     })
+  end
+
+  def perform_changes!
+    FileUtils.mkdir_p "./talks/"
+    File.open("./talks/#{slug}.json", 'w') do |file|
+      file.write JSON.pretty_generate(prepared_data)
+    end
+  end
+
+  def commit_message
+    "added talk '#{title}'"
+  end
+
+  private
+  def slug
+    keyize(title)
   end
 end
 

@@ -57,42 +57,69 @@ get '/' do
 end
 
 post '/' do
-  input = Aula.new(params)
-
-  repo = Gitforms::Repo.new("mkaschenko", "mkaschenko.github.io")
+  aula = Aula.new(params)
   github = Gitforms::Github.new(system_login, password)
 
-  repo_clone = Gitforms::Repo.new(system_login, repo.name)
-  github.delete_repo repo_clone
-
-  data = input.prepare
-  slug = data.fetch(:key)
-
-  github.fork_repo repo
-
-  FileUtils.rm_rf "#{Dir.tmpdir}/#{repo.name}"
-
-  git = Git.clone(repo.url, "#{Dir.tmpdir}/#{repo.name}")
-  git.chdir do
-    FileUtils.mkdir_p("./talks/")
-    File.open("./talks/#{slug}.json", 'w') do |file|
-      file.write JSON.pretty_generate(data)
-    end
-  end
-
-  msg = "added talk '#{data.fetch(:title)}'"
-  git.add(all: true)
-  git.commit_all msg
-
-  r = git.add_remote('cloned', repo_clone.url)
-  git.push(r)
-  ref = git.log.first.to_s
-
-  github.create_pull_request(repo, ref, msg)
-  github.delete_repo repo_clone
+  use_case = ForkAndSendPullRequest.new(aula, github)
+  use_case.run("mkaschenko", "mkaschenko.github.io")
 end
 
+class ForkAndSendPullRequest
+  def initialize(source, github)
+    @github = github
+    @source = source
+  end
 
+  def run(repo_owner_name, repo_name)
+    repo = Gitforms::Repo.new(repo_owner_name, repo_name)
+    fork = Gitforms::Repo.new(system_login, repo.name)
+
+    github.delete_repo fork
+    github.fork_repo repo
+
+    ref = change_and_push(repo, fork) do
+      source.perform_changes!
+    end
+
+    github.create_pull_request(repo, ref, message)
+    github.delete_repo fork
+  end
+
+  private
+  attr_accessor :github, :source
+
+  def message
+    source.commit_message
+  end
+
+  def change_and_push(repo, fork, path = "#{Dir.tmpdir}/#{repo.name}")
+    # prepare directory
+    # clone repo
+
+    # generate data
+    # generate message
+
+    # commit
+    # push
+
+    # return ref
+
+    FileUtils.rm_rf path
+    git = Git.clone(repo.url, path)
+
+    git.chdir do
+      yield
+    end
+
+    git.add(all: true)
+    git.commit_all message
+
+    remote = git.add_remote('cloned', fork.url)
+    git.push remote
+
+    git.log.first.to_s # returns ref
+  end
+end
 
 private
 
