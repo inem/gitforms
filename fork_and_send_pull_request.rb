@@ -33,6 +33,7 @@ class ForkAndSendPullRequest
   # commit & push
   # return ref
   def change_and_push(repo, fork, path = "#{Dir.tmpdir}/#{repo.name}-#{rand(9999999)}")
+    #TODO: Add some logging here
     FileUtils.rm_rf path
     git = Git.clone(repo.url, path)
 
