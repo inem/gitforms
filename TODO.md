@@ -1,8 +1,24 @@
-TODO:
-====
+1st version of product:
+======================
 
-1. wrap all git/github stuff into class
-2. tags & authors split
+-[x] Aula
+-[ ] Microrb
+-[ ] Nice forms
+-[ ] Authentication
+-[ ] Sidekiq
+
+-[ ] Buy domain
+-[ ] Buy hosting
+-[ ] Setup environment
+-[ ] Launch
+-[ ] Monitoring stuff
+
+
+Notes:
+=====
+
+1. -[x] wrap all git/github stuff into class
+2. -[x] tags & authors split
 3. sidekiq
 4. more beautiful forms
 
@@ -19,28 +35,3 @@ TODO:
 
 15. Jekyll
 
----------
-12. +url shortener ?? - realize how to make it private(secret link?, ), buy domain, set up digital ocean
-chp.op/
-
-
-
-1st version of product:
-
-0. working backend(doesn't matter how beautiful code is)
-1. nice looking form for microrb - gitforms.io/microrb.com
-2. nice looking form for aula - gitforms.io/aula.io
-
-
-5. authentication through github
-
-
-
-
-## Architecture
-
-Four main parts for now:
-1. Generate data in required format
-2. Commit, push & submit pull request
-3. Generate & draw form
-4. Authenticate
