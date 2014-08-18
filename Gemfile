@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem "sinatra"
-gem "pry"
+gem "pry-nav", '0.2.3'
 gem "fakefs", :require => "fakefs/safe"
 gem "multi_json"
 gem "virtus"
