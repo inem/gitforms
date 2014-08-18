@@ -6,6 +6,40 @@ Dotenv.load
 require 'forme'
 require 'sinatra'
 
+
+module Gitforms
+  class Github
+    def initialize(username, password)
+      @client = Octokit::Client.new(:login => username, :password => password)
+    end
+
+    def delete_repo(repo)
+      @client.delete_repo repo.itself
+    end
+
+    def fork_repo(repo)
+      @client.fork repo.itself
+    end
+
+    def create_pull_request(repo, ref, message, branch = 'master')
+      @client.create_pull_request(repo.itself, branch, ref, message, "")
+    end
+  end
+
+  class Repo
+    attr_reader :username, :name, :itself
+
+    def initialize(username, name)
+      @username, @name = username, name
+      @itself = Octokit::Repository.new "#{username}/#{name}"
+    end
+
+    def url
+      "https://github.com/#{username}/#{name}.git"
+    end
+  end
+end
+
 get '/' do
   @aula = Aula.new
   a = Forme.form(@aula, :method => 'POST') do |f|
@@ -25,25 +59,21 @@ end
 post '/' do
   input = Aula.new(params)
 
-  system_login = ENV['GITHUB_LOGIN']
-  pwd = ENV['GITHUB_PWD']
+  repo = Gitforms::Repo.new("mkaschenko", "mkaschenko.github.io")
+  github = Gitforms::Github.new(system_login, password)
 
-  repo_url = 'https://github.com/mkaschenko/mkaschenko.github.io.git'
-
-  repo = Octokit::Repository.new "mkaschenko/mkaschenko.github.io"
-  inem_repo = Octokit::Repository.new "#{system_login}/mkaschenko.github.io"
-
-  client = Octokit::Client.new(:login => system_login, :password => pwd)
-  # client.delete_repo inem_repo
+  repo_clone = Gitforms::Repo.new(system_login, repo.name)
+  github.delete_repo repo_clone
 
   data = input.prepare
   slug = data.fetch(:key)
-  client.fork(repo)
+
+  github.fork_repo repo
 
   FileUtils.rm_rf "#{Dir.tmpdir}/#{repo.name}"
 
-  g = Git.clone("#{repo.url}.git", "#{Dir.tmpdir}/#{repo.name}")
-  g.chdir do
+  git = Git.clone(repo.url, "#{Dir.tmpdir}/#{repo.name}")
+  git.chdir do
     FileUtils.mkdir_p("./talks/")
     File.open("./talks/#{slug}.json", 'w') do |file|
       file.write JSON.pretty_generate(data)
@@ -51,13 +81,25 @@ post '/' do
   end
 
   msg = "added talk '#{data.fetch(:title)}'"
-  g.add(:all=>true)
-  g.commit_all(msg)
+  git.add(all: true)
+  git.commit_all msg
 
-  r = g.add_remote('cloned', "https://github.com/#{system_login}/mkaschenko.github.io.git")
-  g.push(r)
-  ref = g.log.first.to_s
+  r = git.add_remote('cloned', repo_clone.url)
+  git.push(r)
+  ref = git.log.first.to_s
 
-  client.create_pull_request(repo, 'master', ref, "added talk '#{data.fetch(:title)}'", "")
-  client.delete_repo inem_repo
+  github.create_pull_request(repo, ref, msg)
+  github.delete_repo repo_clone
 end
+
+
+
+private
+
+  def system_login
+    ENV['GITHUB_LOGIN']
+  end
+
+  def password
+    ENV['GITHUB_PWD']
+  end
