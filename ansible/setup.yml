@@ -2,15 +2,34 @@
 - hosts: ocean
   vars:
     app_dir: /var/www/gitforms
-    user: www-data
+    user: appwww
     branch: master
 
   tasks:
+    # - name: updates a server
+    #   apt: update_cache=yes
+
+    # - name: upgrade a server
+    #   apt: upgrade=full
+
     - name: Latest version of Ruby is installed
       apt: pkg={{ item }} state=latest
       with_items:
         - ruby2.0
         - ruby2.0-dev
+        - git-core
+        - curl
+        - zlib1g-dev
+        - build-essential
+        - libssl-dev
+        - libreadline-dev
+        - libyaml-dev
+        - libsqlite3-dev
+        - sqlite3
+        - libxml2-dev
+        - libxslt1-dev
+        - libcurl4-openssl-dev
+        - python-software-properties
 
     - name: Symlink exists for Ruby 2.0
       file: src=/usr/bin/ruby2.0 dest=/usr/local/bin/ruby state=link
@@ -24,6 +43,9 @@
     - name: Ensure git in installed
       apt: pkg=git state=present force=yes
 
+    - name: Create user
+      user: name={{ user }} shell=/bin/bash groups=www-data append=yes
+
     - name: create directory for project
       file:
         path={{ app_dir }}
@@ -35,12 +57,15 @@
     - name: Ensure github is in the known_hosts file
       known_hosts: host=github.com state=present
 
-    - name: checkout repo
-      tags: code_update
-      remote_user: "{{ user }}"
-      git: repo=https://github.com/inem/gitforms
-        dest={{app_dir}}
-        accept_hostkey=yes
-        version={{branch}}
-      # notify:
-      # - touch restart.txt
+    # - name: checkout repo
+    #   tags: code_update
+    #   remote_user: "{{ user }}"
+    #   git: repo=https://github.com/inem/gitforms
+    #     dest={{app_dir}}
+    #     accept_hostkey=yes
+    #     version={{branch}}
+    #   # notify:
+    #   # - touch restart.txt
+
+    - name: Install Gems
+      gem: name=bundler state=latest
