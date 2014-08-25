@@ -11,8 +11,8 @@ require_relative 'lib/aula'
 
 module Gitforms
   class Github
-    def initialize(username, password)
-      @client = Octokit::Client.new(:login => username, :password => password)
+    def initialize(user)
+      @client = user
     end
 
     def delete_repo(repo)

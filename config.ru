@@ -13,8 +13,11 @@ require_relative "authentication_app.rb"
 
 #use Rack::Static, :urls => ["/css", "/img", "/js"], :root => "public"
 
-run Rack::URLMap.new \
-  "/aula.io" => Gitforms::Aula.new,
-  "/"    => Gitforms::Authentication.new
+
+#run Rack::URLMap.new \
+#  "/aula.io" => Gitforms::Aula.new,
+#  "/"    => Gitforms::Authentication.new
+
+run Gitforms::Aula.new
 
 # vim:ft=ruby
