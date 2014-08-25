@@ -1,0 +1,46 @@
+---
+- hosts: ocean
+  vars:
+    app_dir: /var/www/gitforms
+    user: www-data
+    branch: master
+
+  tasks:
+    - name: Latest version of Ruby is installed
+      apt: pkg={{ item }} state=latest
+      with_items:
+        - ruby2.0
+        - ruby2.0-dev
+
+    - name: Symlink exists for Ruby 2.0
+      file: src=/usr/bin/ruby2.0 dest=/usr/local/bin/ruby state=link
+
+    - name: Symlink exists for Ruby Gems 2.0
+      file: src=/usr/bin/gem2.0 dest=/usr/local/bin/gem state=link
+
+    - name: Ensure nginx in installed
+      apt: pkg=nginx state=present force=yes
+
+    - name: Ensure git in installed
+      apt: pkg=git state=present force=yes
+
+    - name: create directory for project
+      file:
+        path={{ app_dir }}
+        owner={{ user }}
+        group={{ user }}
+        mode=0755
+        state=directory
+
+    - name: Ensure github is in the known_hosts file
+      known_hosts: host=github.com state=present
+
+    - name: checkout repo
+      tags: code_update
+      remote_user: "{{ user }}"
+      git: repo=https://github.com/inem/gitforms
+        dest={{app_dir}}
+        accept_hostkey=yes
+        version={{branch}}
+      # notify:
+      # - touch restart.txt
