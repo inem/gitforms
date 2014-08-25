@@ -10,7 +10,7 @@ require 'dotenv'
 Dotenv.load
 
 module Gitforms
-  class Aula < Sinatra::Base
+  class AulaApp < Sinatra::Base
     enable :sessions
 
     set :github_options, {

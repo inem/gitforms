@@ -18,6 +18,6 @@ require_relative "authentication_app.rb"
 #  "/aula.io" => Gitforms::Aula.new,
 #  "/"    => Gitforms::Authentication.new
 
-run Gitforms::Aula.new
+run Gitforms::AulaApp.new
 
 # vim:ft=ruby
