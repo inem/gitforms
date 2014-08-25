@@ -27,6 +27,7 @@ module Gitforms
     register Sinatra::Auth::Github
 
     get '/aula.io' do
+      authenticate!
       haml :aula
     end
 
@@ -35,9 +36,9 @@ module Gitforms
       aula = Aula.new(params)
       github = Gitforms::Github.new(github_user)
 
-      use_case = ForkAndSendPullRequest.new(aula, github, github_user.login)
+      use_case = ForkAndSendPullRequest.new(aula, github)
       # use_case.run("hnrc", "aula")
-      use_case.run("mkaschenko", "mkaschenko.github.io")
+      use_case.run("mkaschenko", "mkaschenko.github.io", github_user.login)
       redirect '/aula.io'
     end
   end
