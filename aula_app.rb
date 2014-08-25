@@ -34,7 +34,7 @@ module Gitforms
     post '/aula.io' do
       authenticate!
       aula = Aula.new(params)
-      github = Gitforms::Github.new(github_user)
+      github = Gitforms::Github.new(github_user.api)
 
       use_case = ForkAndSendPullRequest.new(aula, github)
       # use_case.run("hnrc", "aula")
