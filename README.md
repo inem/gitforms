@@ -33,6 +33,8 @@ Run
 
 # Forms:
 ruby app.rb
+shotgun app.rb -p 4567
+bundle exec rackup -p9393
 
 # Work with github API:
 ruby git-test.rb

@@ -3,7 +3,7 @@
 
 -[x] Aula
 -[ ] Microrb
--[ ] Nice forms
+-[x] Nice form
 -[ ] Authentication
 -[ ] Sidekiq
 
@@ -24,9 +24,11 @@ Notes:
 1. -[x] wrap all git/github stuff into class
 2. -[x] tags & authors split
 3. sidekiq
-4. more beautiful forms
+4. -[x] more beautiful forms
 
 6. more than one entity per repo
+
+7. autocomplete for tags for example
 
 8. microrb
 9. deploy
