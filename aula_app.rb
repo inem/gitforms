@@ -3,6 +3,7 @@ require_relative 'fork_and_send_pull_request'
 
 require 'rubygems'
 require "bundler/setup"
+require 'sinatra_auth_github'
 
 require 'sinatra'
 require 'dotenv'
