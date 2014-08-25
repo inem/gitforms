@@ -14,7 +14,7 @@ module Gitforms
     enable :sessions
 
     set :github_options, {
-      :scopes    => "user",
+      :scopes    => ["user", "public_repo"],
       :secret    => ENV['GITHUB_CLIENT_SECRET'],
       :client_id => ENV['GITHUB_CLIENT_ID'],
     }
