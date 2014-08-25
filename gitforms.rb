@@ -26,6 +26,7 @@ module Gitforms
     end
 
     def create_pull_request(repo, ref, message, branch = 'master')
+      sleep 90
       client.create_pull_request(repo.itself, branch, ref, message, "")
     end
 
