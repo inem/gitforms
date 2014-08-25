@@ -39,7 +39,7 @@ module Gitforms
       aula = Aula.new(params)
       github = Gitforms::Github.new(github_user)
 
-      use_case = ForkAndSendPullRequest.new(aula, github)
+      use_case = ForkAndSendPullRequest.new(aula, github, github_user.login)
       # use_case.run("hnrc", "aula")
       use_case.run("mkaschenko", "mkaschenko.github.io")
       redirect '/aula.io'
