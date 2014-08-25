@@ -20,6 +20,8 @@ GEM
       multipart-post (>= 1.2, < 3)
     forme (1.0.0)
     git (1.2.8)
+    haml (4.0.5)
+      tilt
     ice_nine (0.11.0)
     method_source (0.8.2)
     multi_json (1.10.1)
@@ -38,6 +40,8 @@ GEM
     sawyer (0.5.5)
       addressable (~> 2.3.5)
       faraday (~> 0.8, < 0.10)
+    shotgun (0.9)
+      rack (>= 1.0)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -59,8 +63,10 @@ DEPENDENCIES
   fakefs
   forme
   git
+  haml
   multi_json
   octokit
   pry-nav (= 0.2.3)
+  shotgun
   sinatra
   virtus
