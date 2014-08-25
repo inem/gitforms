@@ -19,11 +19,6 @@ module Gitforms
       :client_id => ENV['GITHUB_CLIENT_ID'],
     }
 
-    get '/auth' do
-      authenticate!
-      "Hello there, #{github_user.login}!"
-    end
-
     get '/logout' do
       logout!
       redirect 'https://github.com'
@@ -36,6 +31,7 @@ module Gitforms
     end
 
     post '/aula.io' do
+      authenticate!
       aula = Aula.new(params)
       github = Gitforms::Github.new(github_user)
 
