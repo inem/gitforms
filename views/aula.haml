@@ -2,40 +2,45 @@
   %head
     %link{:href=>"//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css", :rel=>"stylesheet"}
 
-  %body
-    %form{:method => 'POST', :role => "form", :class => "form-horizontal", :style => "width:500px"}
-      .form-group
-        %label.control-label.col-sm-4 Title
-        .col-sm-8
-          %input{:name => :title, :placeholder => :Title, :class => "form-control"}
-      .form-group
-        %label.control-label.col-sm-4 Year
-        .col-sm-8
-          %input{:name => :year, :placeholder => :Year, :class => "form-control"}
-      .form-group
-        %label.control-label.col-sm-4 Video URL
-        .col-sm-8
-          %input{:name => :url, :placeholder => 'Video URL', :class => "form-control"}
-      .form-group
-        %label.control-label.col-sm-4 Image URL
-        .col-sm-8
-          %input{:name => :imageUrl, :placeholder => 'Image URL', :class => "form-control"}
-      .form-group
-        %label.control-label.col-sm-4 Description
-        .col-sm-8
-          %input{:name => :description, :placeholder => 'Description', :class => "form-control"}
-      .form-group
-        %label.control-label.col-sm-4 Tags
-        .col-sm-8
-          %input{:name => :tags, :placeholder => 'tag1, tag2, tag3, ..', :class => "form-control"}
-      .form-group
-        %label.control-label.col-sm-4 Speakers
-        .col-sm-8
-          %input{:name => :speakers, :placeholder => 'speaker1, speaker2', :class => "form-control"}
-      .form-group
-        %label.control-label.col-sm-4 Location
-        .col-sm-8
-          %input{:name => :location, :placeholder => "Location", :class => "form-control"}
-      .form-group
-        .col-sm-offset-4.col-sm-8
-          %button{:class => "btn btn-default btn-primary"} Send pull request
+  %body{:style => "padding:10px 30px"}
+    .content{:style => "width:500px"}
+      %h1 Contribute to Aula.io
+      %p.lead After you submit this form, we generate all required files and send pull request on your behalf
+
+      %form{:method => 'POST', :role => "form", :class => "form-horizontal"}
+        .form-group
+          %label.control-label.col-sm-4 Title
+          .col-sm-8
+            %input{:name => :title, :placeholder => :Title, :class => "form-control"}
+        .form-group
+          %label.control-label.col-sm-4 Year
+          .col-sm-8.col-lg-2
+            %input{:name => :year, :placeholder => :Year, :class => "form-control"}
+        .form-group
+          %label.control-label.col-sm-4 Video URL
+          .col-sm-8
+            %input{:name => :url, :placeholder => 'Video URL', :class => "form-control"}
+            <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+        .form-group
+          %label.control-label.col-sm-4 Image URL
+          .col-sm-8
+            %input{:name => :imageUrl, :placeholder => 'Image URL', :class => "form-control"}
+        .form-group
+          %label.control-label.col-sm-4 Description
+          .col-sm-8
+            %textarea{:name => :description, :placeholder => 'Description', :class => "form-control"}
+        .form-group
+          %label.control-label.col-sm-4 Tags
+          .col-sm-8
+            %input{:name => :tags, :placeholder => 'tag1, tag2, tag3, ..', :class => "form-control"}
+        .form-group
+          %label.control-label.col-sm-4 Speakers
+          .col-sm-8
+            %input{:name => :speakers, :placeholder => 'speaker1, speaker2', :class => "form-control"}
+        .form-group
+          %label.control-label.col-sm-4 Location
+          .col-sm-8
+            %input{:name => :location, :placeholder => "Location", :class => "form-control"}
+        .form-group
+          .col-sm-offset-4.col-sm-8
+            %button{:class => "btn btn-default btn-primary"} Send pull request
