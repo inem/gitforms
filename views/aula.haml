@@ -1,0 +1,41 @@
+%html
+  %head
+    %link{:href=>"//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css", :rel=>"stylesheet"}
+
+  %body
+    %form{:method => 'POST', :role => "form", :class => "form-horizontal", :style => "width:500px"}
+      .form-group
+        %label.control-label.col-sm-4 Title
+        .col-sm-8
+          %input{:name => :title, :placeholder => :Title, :class => "form-control"}
+      .form-group
+        %label.control-label.col-sm-4 Year
+        .col-sm-8
+          %input{:name => :year, :placeholder => :Year, :class => "form-control"}
+      .form-group
+        %label.control-label.col-sm-4 Video URL
+        .col-sm-8
+          %input{:name => :url, :placeholder => 'Video URL', :class => "form-control"}
+      .form-group
+        %label.control-label.col-sm-4 Image URL
+        .col-sm-8
+          %input{:name => :imageUrl, :placeholder => 'Image URL', :class => "form-control"}
+      .form-group
+        %label.control-label.col-sm-4 Description
+        .col-sm-8
+          %input{:name => :description, :placeholder => 'Description', :class => "form-control"}
+      .form-group
+        %label.control-label.col-sm-4 Tags
+        .col-sm-8
+          %input{:name => :tags, :placeholder => 'tag1, tag2, tag3, ..', :class => "form-control"}
+      .form-group
+        %label.control-label.col-sm-4 Speakers
+        .col-sm-8
+          %input{:name => :speakers, :placeholder => 'speaker1, speaker2', :class => "form-control"}
+      .form-group
+        %label.control-label.col-sm-4 Location
+        .col-sm-8
+          %input{:name => :location, :placeholder => "Location", :class => "form-control"}
+      .form-group
+        .col-sm-offset-4.col-sm-8
+          %button{:class => "btn btn-default btn-primary"} Send pull request
