@@ -13,6 +13,7 @@ List of projects
 - https://github.com/trek/beautiful-open
 - https://github.com/percolator-io/categories
 - https://github.com/strzalek/queues.io
+- https://github.com/ruby-conferences/ruby-conferences-site
 - this project itself (for adding more projects) - once deployed
 
 
