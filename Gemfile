@@ -12,3 +12,4 @@ gem 'octokit'
 gem "git"
 
 gem "haml"
+gem "sinatra_auth_github"
