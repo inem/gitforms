@@ -12,7 +12,7 @@ set -e
 
 # Feel free to change any of the following variables for your app:
 TIMEOUT=${TIMEOUT-60}
-APP_ROOT=/var/www/gitforms/
+APP_ROOT=/var/www/gitforms
 PID=$APP_ROOT/tmp/pids/unicorn.pid
 CMD="cd $APP_ROOT; bundle exec unicorn -D -c $APP_ROOT/ansible/templates/unicorn.conf -E production"
 AS_USER=appwww

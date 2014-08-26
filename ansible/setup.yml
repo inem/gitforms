@@ -35,6 +35,14 @@
         mode=0755
         state=directory
 
+    - name: ensure tmp/pids exist
+      file:
+        path=/var/www/gitforms/tmp/sockets
+        owner={{ user }}
+        group=www-data
+        mode=0755
+        state=directory
+
     - name: ensure log exist
       file:
         path=/var/www/gitforms/log
