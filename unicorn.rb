@@ -9,11 +9,11 @@ listen 'unix:/tmp/gitforms.sock', :backlog => 512
 worker_processes 3
 timeout 30
 
-# Force the bundler gemfile environment variable to
-# reference the capistrano "current" symlink
-before_exec do |_|
-  ENV["BUNDLE_GEMFILE"] = File.join(root, 'Gemfile')
-end
+# # Force the bundler gemfile environment variable to
+# # reference the capistrano "current" symlink
+# before_exec do |_|
+#   ENV["BUNDLE_GEMFILE"] = File.join(root, 'Gemfile')
+# end
 
 preload_app true
 if GC.respond_to?(:copy_on_write_friendly=)
