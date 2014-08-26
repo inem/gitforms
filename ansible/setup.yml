@@ -6,7 +6,6 @@
     branch: master
 
   tasks:
-
     - name: create directory for project
       file:
         path={{ app_dir }}
@@ -27,6 +26,14 @@
         version={{branch}}
       # notify:
       # - touch restart.txt
+
+    - name: ensure tmp/pids exist
+      file:
+        path=/var/www/gitforms/tmp/pids
+        owner={{ user }}
+        group=www-data
+        mode=0755
+        state=directory
 
     - name: Install gems
       command: bash -lc "bundle install --path vendor/bundle"

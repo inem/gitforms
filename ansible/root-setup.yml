@@ -63,10 +63,26 @@
       notify:
         - restart nginx
 
+    - name: give /var/log/nginx to www-data
+      file:
+        path=/var/logs/nginx
+        owner=www-data
+        group=www-data
+        mode=0755
+        state=directory
+
+    - name: gitforms-error.log
+      file: path=/var/log/nginx/gitforms-error.log state=touch
+
+    - name: gitforms-access.log
+      file: path=/var/log/nginx/gitforms-access.log state=touch
+
     - name: setup nginx - gitforms.conf
       template: dest=/etc/nginx/sites-enabled/gitforms.conf src=templates/nginx/gitforms.conf
       notify:
         - restart nginx
+
+
 
   handlers:
     - name: restart nginx
