@@ -57,3 +57,17 @@
 
     - name: Install unicorn
       gem: name=unicorn state=present
+
+    - name: setup nginx - nginx.conf
+      template: dest=/etc/nginx/nginx.conf src=templates/nginx/nginx.conf
+      notify:
+        - restart nginx
+
+    - name: setup nginx - gitforms.conf
+      template: dest=/etc/nginx/sites-enabled/gitforms.conf src=templates/nginx/gitforms.conf
+      notify:
+        - restart nginx
+
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=restarted enabled=yes
