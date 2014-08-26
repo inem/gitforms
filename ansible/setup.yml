@@ -35,6 +35,15 @@
         mode=0755
         state=directory
 
+    - name: ensure log exist
+      file:
+        path=/var/www/gitforms/log
+        owner={{ user }}
+        group=www-data
+        mode=0755
+        state=directory
+
+
     - name: Install gems
       command: bash -lc "bundle install --path vendor/bundle"
         chdir={{ app_dir }}

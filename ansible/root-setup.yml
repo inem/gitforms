@@ -82,7 +82,11 @@
       notify:
         - restart nginx
 
-
+    - name: setup unicorn autostart
+      template: dest=/etc/init.d/unicorn_init.sh src=templates/unicorn_init.sh
+        owner=root
+        group=root
+        mode=0755
 
   handlers:
     - name: restart nginx
