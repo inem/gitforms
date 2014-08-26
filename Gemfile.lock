@@ -22,6 +22,7 @@ GEM
     haml (4.0.5)
       tilt
     ice_nine (0.11.0)
+    kgio (2.9.2)
     method_source (0.8.2)
     multi_json (1.10.1)
     multipart-post (2.0.0)
@@ -36,6 +37,7 @@ GEM
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
+    raindrops (0.13.0)
     sawyer (0.5.5)
       addressable (~> 2.3.5)
       faraday (~> 0.8, < 0.10)
@@ -51,6 +53,10 @@ GEM
     slop (3.5.0)
     thread_safe (0.3.4)
     tilt (1.4.1)
+    unicorn (4.8.3)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
     virtus (1.0.3)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -76,4 +82,5 @@ DEPENDENCIES
   shotgun
   sinatra
   sinatra_auth_github
+  unicorn
   virtus
