@@ -33,15 +33,19 @@ module Gitforms
   end
 
   class Repo
-    attr_reader :username, :name, :itself
+    attr_reader :username, :name, :itself, :token
 
-    def initialize(username, name)
-      @username, @name = username, name
+    def initialize(username, name, token = nil)
+      @username, @name, @token = username, name, token
       @itself = Octokit::Repository.new "#{username}/#{name}"
     end
 
     def url
-      "https://github.com/#{username}/#{name}.git"
+      if token
+        "https://#{token}@github.com/#{username}/#{name}.git"
+      else
+        "https://github.com/#{username}/#{name}.git"
+      end
     end
   end
 end

@@ -38,7 +38,7 @@ module Gitforms
 
       use_case = ForkAndSendPullRequest.new(aula, github)
       # use_case.run("hnrc", "aula")
-      use_case.run("mkaschenko", "mkaschenko.github.io", github_user.login)
+      use_case.run("mkaschenko", "mkaschenko.github.io", github_user.login, github_user.token)
       redirect '/aula.io'
     end
   end

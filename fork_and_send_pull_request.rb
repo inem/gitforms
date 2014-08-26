@@ -6,9 +6,9 @@ class ForkAndSendPullRequest
     @source = source
   end
 
-  def run(repo_owner_name, repo_name, initiator_name)
+  def run(repo_owner_name, repo_name, initiator_name, initiator_token)
     repo = Gitforms::Repo.new(repo_owner_name, repo_name)
-    fork = Gitforms::Repo.new(initiator_name, repo.name)
+    fork = Gitforms::Repo.new(initiator_name, repo.name, initiator_token)
 
     github.delete_repo fork
     github.fork_repo repo
