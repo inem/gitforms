@@ -1,23 +1,12 @@
-ENV['RACK_ENV'] ||= 'development'
 require "rubygems"
 require "bundler/setup"
 require 'dotenv'
 Dotenv.load
 
-$LOAD_PATH << File.dirname(__FILE__) + '/lib'
-#require File.expand_path(File.join(File.dirname(__FILE__), 'aula_app'))
-#require File.expand_path(File.join(File.dirname(__FILE__), 'authentication_app'))
+ENV['RACK_ENV'] ||= 'development'
 
-require_relative "aula_app.rb"
-require_relative "authentication_app.rb"
+require_relative "aula_app"
 
 #use Rack::Static, :urls => ["/css", "/img", "/js"], :root => "public"
 
-
-#run Rack::URLMap.new \
-#  "/aula.io" => Gitforms::Aula.new,
-#  "/"    => Gitforms::Authentication.new
-
 run Gitforms::AulaApp.new
-
-# vim:ft=ruby
