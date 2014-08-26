@@ -38,3 +38,8 @@ bundle exec rackup -p9393
 
 # Work with github API:
 ruby git-test.rb
+
+Ansible
+=========
+ansible-playbook root-setup.yml -u root
+ansible-playbook setup.yml -u appwww

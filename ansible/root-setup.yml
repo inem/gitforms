@@ -1,0 +1,59 @@
+---
+- hosts: ocean
+  vars:
+    user: appwww
+
+  tasks:
+    - name: updates a server
+      apt: update_cache=yes
+
+    - name: upgrade a server
+      apt: upgrade=full
+
+    - name: Latest version of Ruby is installed
+      apt: pkg={{ item }} state=latest
+      with_items:
+        - ruby2.0
+        - ruby2.0-dev
+        - git-core
+        - curl
+        - zlib1g-dev
+        - build-essential
+        - libssl-dev
+        - libreadline-dev
+        - libyaml-dev
+        - libsqlite3-dev
+        - sqlite3
+        - libxml2-dev
+        - libxslt1-dev
+        - libcurl4-openssl-dev
+        - python-software-properties
+
+    - name: Symlink exists for Ruby 2.0
+      file: src=/usr/bin/ruby2.0 dest=/usr/local/bin/ruby state=link
+
+    - name: Symlink exists for Ruby Gems 2.0
+      file: src=/usr/bin/gem2.0 dest=/usr/local/bin/gem state=link
+
+    - name: Ensure nginx in installed
+      apt: pkg=nginx state=present force=yes
+
+    - name: Ensure git in installed
+      apt: pkg=git state=present force=yes
+
+    - name: Create user
+      user: name={{ user }} shell=/bin/bash groups=www-data append=yes
+
+    - name: give /var/www to appwww
+      file:
+        path=/var/www
+        owner={{ user }}
+        group={{ user }}
+        mode=0755
+        state=directory
+
+    - name: Install bundler
+      gem: name=bundler state=present
+
+    - name: Install unicorn
+      gem: name=unicorn state=present
